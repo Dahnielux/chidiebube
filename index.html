@@ -110,6 +110,10 @@ section{padding:clamp(48px,8vw,88px) 0;border-top:1px solid var(--line)}
 .skills{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;padding:0;list-style:none}
 .skills li{padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:.92rem}
 
+/* theme toggle */
+.theme-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;margin-bottom:24px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--fg);font:500 .92rem var(--font-body);cursor:pointer;transition:border-color .15s}
+.theme-btn:hover{border-color:var(--accent)}
+.theme-btn .ti{font-size:1.05rem;line-height:1;color:var(--accent)}
 /* photos */
 .hero-grid{display:grid;grid-template-columns:1fr;gap:clamp(28px,6vw,64px);align-items:center}
 .portrait,.photo,.gallery figure{margin:0;overflow:hidden;border:1px solid var(--line);background:var(--card)}
@@ -151,6 +155,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 <main>
 <section class="hero" style="border-top:0">
   <div class="wrap hero-grid"><div class="hero-text">
+    <button type="button" class="theme-btn" id="themeBtn" aria-pressed="false"><span class="ti" aria-hidden="true">☾</span><span class="tl">Dark mode</span></button>
     <h1>I design brands and products people <em>remember.</em></h1>
     <p class="lead">Hey, I’m Chidiebube. I’m a brand and product designer with an engineering background and five years in the design industry. I create unique visual designs and usable products.</p>
     <div class="cta-row">
@@ -257,5 +262,16 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 </main>
 
 <footer><div class="wrap"><span>© 2026 Chidiebube Emeka</span><span>+234 902 575 7713</span></div></footer>
+<script>
+(function(){
+  var r=document.documentElement,b=document.getElementById('themeBtn');
+  if(!b)return;
+  function cur(){var t=r.getAttribute('data-theme');if(t)return t;return window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  function paint(){var d=cur()==='dark';b.setAttribute('aria-pressed',String(d));b.querySelector('.ti').textContent=d?'☀':'☾';b.querySelector('.tl').textContent=d?'Light mode':'Dark mode';}
+  try{var s=localStorage.getItem('theme');if(s==='dark'||s==='light')r.setAttribute('data-theme',s);}catch(e){}
+  b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(e){}paint();});
+  paint();
+})();
+</script>
 </body>
 </html>
