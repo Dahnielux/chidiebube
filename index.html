@@ -118,7 +118,29 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 .go:hover{transform:translateX(4px);text-decoration:none}
 .caret{display:inline-block;width:.07em;height:.85em;margin-left:.05em;background:var(--accent);vertical-align:-.05em;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.go,.shots img,.gallery img,.photo img{transition:none}.progress{display:none}}
+/* silvia-style motion */
+html.lock{overflow:hidden}
+#pre{position:fixed;inset:0;z-index:100;background:var(--fg);color:var(--bg);display:flex;flex-direction:column;justify-content:space-between;padding:clamp(20px,4vw,40px);padding-top:calc(env(safe-area-inset-top,0px) + clamp(20px,4vw,40px));transition:transform .9s cubic-bezier(.7,0,.2,1)}
+#pre.done{transform:translateY(-100%)}
+.pn{align-self:flex-end;font-family:var(--font-display);font-size:clamp(3.5rem,16vw,10rem);line-height:1;font-variant-numeric:tabular-nums}
+.pb{font-size:.95rem;letter-spacing:.16em;text-transform:uppercase;opacity:.8}
+.js .split .w{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .06em .14em 0;margin:0 -.06em -.14em 0}
+.js .split .wi{display:inline-block;transform:translateY(115%);transition:transform .95s cubic-bezier(.2,.7,.2,1)}
+.js .split.in .wi{transform:none}
+.roll{display:inline-block;position:relative;overflow:hidden;vertical-align:bottom;line-height:1.35}
+.roll>span{display:block;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.roll>span+span{position:absolute;left:0;top:100%;white-space:nowrap}
+a:hover .roll>span,a:focus-visible .roll>span{transform:translateY(-100%)}
+.row h3{transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.row:hover h3{transform:translateX(10px)}
+.marq{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0}
+.track{display:flex;width:max-content;animation:marq 30s linear infinite}
+.marq:hover .track{animation-play-state:paused}
+.grp{display:flex;flex-shrink:0;align-items:center}
+.grp span{font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.6rem);padding:0 26px;white-space:nowrap}
+.grp .dot{color:var(--accent);padding:0}
+@keyframes marq{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.go,.shots img,.gallery img,.photo img,.roll>span,.row h3{transition:none}.progress{display:none}.track{animation:none}}
 </style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window)document.documentElement.classList.add('js')</script>
 </head>
@@ -138,7 +160,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 <section class="hero">
   <div class="wrap">
     <button type="button" class="theme-btn" id="themeBtn" aria-pressed="false"><span class="ti" aria-hidden="true">☾</span><span class="tl">Dark mode</span></button>
-    <h1 aria-label="I design brands and products that people remember.">I design brands and products that people <em id="tw">remember.</em></h1>
+    <h1 aria-label="I design brands and products that people remember.">I design brands and products that people <em>remember.</em></h1>
     <p class="lead">Hey, I’m Chidiebube. I’m a brand and product designer with an engineering background and five years in the design industry. I create unique visual designs and usable products.</p>
     <div class="cta-row">
       <a class="btn" href="#work">See my work</a>
@@ -148,6 +170,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
   </div>
 </section>
 
+<div class="marq" aria-hidden="true"><div class="track"><div class="grp"><span>Brand identity</span><span class="dot">✦</span><span>UI design</span><span class="dot">✦</span><span>UX design</span><span class="dot">✦</span><span>Visual design</span><span class="dot">✦</span><span>Prototyping</span><span class="dot">✦</span><span>Figma</span><span class="dot">✦</span><span>Adobe Creative Suite</span><span class="dot">✦</span></div><div class="grp"><span>Brand identity</span><span class="dot">✦</span><span>UI design</span><span class="dot">✦</span><span>UX design</span><span class="dot">✦</span><span>Visual design</span><span class="dot">✦</span><span>Prototyping</span><span class="dot">✦</span><span>Figma</span><span class="dot">✦</span><span>Adobe Creative Suite</span><span class="dot">✦</span></div></div></div>
 <section id="work">
   <div class="wrap">
     <h2>Latest work &amp; <em>projects.</em></h2>
@@ -281,11 +304,36 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
     draw();
     setTimeout(function step(){i++;draw();if(i<full.length){setTimeout(step,80+Math.random()*70);}else{setTimeout(function(){var cc=tw.querySelector('.caret');if(cc)cc.remove();},2500);}},500);
   }
-  var els=document.querySelectorAll('section h2,.row,.stat,.list li,.gallery figure,.cols ul,.about>div,.contact .wrap>*,.lead,.cta-row,.socials');
+  var els=document.querySelectorAll('.row,.stat,.list li,.gallery figure,.cols ul,.about>div,.contact .wrap>*,.lead,.cta-row,.socials');
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var el=e.target;el.classList.add('in');io.unobserve(el);
     if(el.classList.contains('stat')){var b=el.querySelector('b'),m=b.textContent.match(/^([^0-9]*)([0-9]+)(.*)$/);if(m){var n=+m[2],t0=performance.now();(function f(t){var p=Math.min(1,(t-t0)/1100);b.textContent=m[1]+Math.round(n*(1-Math.pow(1-p,3)))+m[3];if(p<1)requestAnimationFrame(f);})(t0);}}
   });},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
   els.forEach(function(el,k){el.classList.add('reveal');el.style.transitionDelay=(k%4)*70+'ms';io.observe(el);});
+})();
+</script>
+<script>
+(function(){
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce||!('IntersectionObserver' in window))return;
+  var de=document.documentElement,started=false;
+  document.querySelectorAll('.btn,nav a,.socials a').forEach(function(a){var t=a.textContent.trim();if(!t)return;a.textContent='';var r=document.createElement('span');r.className='roll';var s1=document.createElement('span');s1.textContent=t;var s2=document.createElement('span');s2.textContent=t;s2.setAttribute('aria-hidden','true');r.appendChild(s1);r.appendChild(s2);a.appendChild(r);});
+  function split(el){var i=0;(function walk(n){Array.prototype.slice.call(n.childNodes).forEach(function(c){if(c.nodeType===3){var parts=c.textContent.split(' '),frag=document.createDocumentFragment();parts.forEach(function(p,k){if(p){var w=document.createElement('span');w.className='w';var wi=document.createElement('span');wi.className='wi';wi.textContent=p;wi.style.transitionDelay=(i++*70)+'ms';w.appendChild(wi);frag.appendChild(w);}if(k<parts.length-1)frag.appendChild(document.createTextNode(' '));});n.replaceChild(frag,c);}else if(c.nodeType===1){walk(c);}});})(el);el.classList.add('split');}
+  var h1=document.querySelector('.hero h1');
+  if(h1)split(h1);
+  var h2s=document.querySelectorAll('section h2');
+  h2s.forEach(split);
+  var io2=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io2.unobserve(e.target);}});},{threshold:.2});
+  h2s.forEach(function(h){io2.observe(h);});
+  function start(){started=true;if(h1)h1.classList.add('in');}
+  var seen=false;try{seen=sessionStorage.getItem('pre')==='1';}catch(e){}
+  if(seen){setTimeout(start,150);}else{
+    var pre=document.createElement('div');pre.id='pre';pre.setAttribute('aria-hidden','true');
+    pre.innerHTML='<div class="pb">Chidiebube Emeka</div><div class="pn"><span id="pc">0</span> / 100</div>';
+    document.body.appendChild(pre);de.classList.add('lock');
+    var t0=performance.now(),dur=1400,pc=document.getElementById('pc');
+    (function f(t){var p=Math.min(1,(t-t0)/dur);pc.textContent=Math.round(100*(1-Math.pow(1-p,2)));if(p<1){requestAnimationFrame(f);}else{pre.classList.add('done');de.classList.remove('lock');try{sessionStorage.setItem('pre','1');}catch(e){}setTimeout(function(){pre.remove();},900);start();}})(t0);
+  }
+  setTimeout(function(){if(!started){if(h1)h1.classList.add('in');var p=document.getElementById('pre');if(p)p.remove();de.classList.remove('lock');}},5000);
 })();
 </script>
 </body>
