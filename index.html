@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
 <title>Chidiebube Emeka | Brand &amp; Product Designer</title>
 <meta name="description" content="Brand and product designer with an engineering background. Unique visual designs and usable products.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,17 +14,14 @@
 :root{
   --font-display:"Fraunces",Georgia,"Times New Roman",serif;
   --font-body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --bg:#f7f7f4; --card:#ffffff; --fg:#161616; --muted:#5d5d58; --line:#dcdcd5;
-  --accent:#3a3dff; --on-accent:#ffffff;
+  --bg:#0b1020; --card:#131a30; --fg:#eef1fa; --muted:#9aa5c4; --line:#232d4a;
+  --accent:#7c8cff; --on-accent:#0b1020;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
-  color-scheme:light;
+  color-scheme:dark;
 }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){--bg:#101012;--card:#18181c;--fg:#f2f2ee;--muted:#a4a49d;--line:#2c2c32;--accent:#8e90ff;--on-accent:#101012;color-scheme:dark}
-}
-:root[data-theme="dark"]{--bg:#101012;--card:#18181c;--fg:#f2f2ee;--muted:#a4a49d;--line:#2c2c32;--accent:#8e90ff;--on-accent:#101012;color-scheme:dark}
+:root[data-theme="light"]{--bg:#f4f6fb;--card:#ffffff;--fg:#0b1020;--muted:#555f7d;--line:#d9deec;--accent:#3a45e6;--on-accent:#ffffff;color-scheme:light}
 html{height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px);scroll-behavior:smooth}
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;min-height:100%;background:var(--bg);color:var(--fg);font:400 17px/1.6 var(--font-body);-webkit-font-smoothing:antialiased}
@@ -99,7 +97,7 @@ nav a:hover{color:var(--fg)}
 
 .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
 .gallery figure{margin:0;border-radius:22px;overflow:hidden;border:1px solid var(--line)}
-.gallery img{width:100%;aspect-ratio:3/4;object-fit:cover}
+.gallery img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center 25%}
 @media (max-width:900px){.gallery{grid-template-columns:repeat(2,1fr)}}
 
 .contact{text-align:center}
@@ -118,6 +116,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 .go:hover{transform:translateX(4px);text-decoration:none}
 .caret{display:inline-block;width:.07em;height:.85em;margin-left:.05em;background:var(--accent);vertical-align:-.05em;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
+.roles{font-family:var(--font-display);font-size:clamp(1.4rem,3.6vw,2.3rem);margin:20px 0 0;min-height:1.4em}
+.role-word{color:var(--accent);font-style:italic}
 /* silvia-style motion */
 html.lock{overflow:hidden}
 #pre{position:fixed;inset:0;z-index:100;background:var(--fg);color:var(--bg);display:flex;flex-direction:column;justify-content:space-between;padding:clamp(20px,4vw,40px);padding-top:calc(env(safe-area-inset-top,0px) + clamp(20px,4vw,40px));transition:transform .9s cubic-bezier(.7,0,.2,1)}
@@ -140,7 +140,7 @@ a:hover .roll>span,a:focus-visible .roll>span{transform:translateY(-100%)}
 .grp span{font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.6rem);padding:0 26px;white-space:nowrap}
 .grp .dot{color:var(--accent);padding:0}
 @keyframes marq{to{transform:translateX(-50%)}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.go,.shots img,.gallery img,.photo img,.roll>span,.row h3{transition:none}.progress{display:none}.track{animation:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.go,.shots img,.gallery img,.photo img,.roll>span,.row h3{transition:none}.progress{display:none}.track{animation:none}.caret{animation:none}}
 </style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window)document.documentElement.classList.add('js')</script>
 </head>
@@ -159,8 +159,9 @@ a:hover .roll>span,a:focus-visible .roll>span{transform:translateY(-100%)}
 <main>
 <section class="hero">
   <div class="wrap">
-    <button type="button" class="theme-btn" id="themeBtn" aria-pressed="false"><span class="ti" aria-hidden="true">☾</span><span class="tl">Dark mode</span></button>
+    <button type="button" class="theme-btn" id="themeBtn" aria-pressed="false"><span class="ti" aria-hidden="true">☀</span><span class="tl">Light mode</span></button>
     <h1 aria-label="I design brands and products that people remember.">I design brands and products that people <em>remember.</em></h1>
+    <p class="roles" aria-live="off">I’m a <span id="role" class="role-word">Brand designer</span><span class="caret" aria-hidden="true"></span></p>
     <p class="lead">Hey, I’m Chidiebube. I’m a brand and product designer with an engineering background and five years in the design industry. I create unique visual designs and usable products.</p>
     <div class="cta-row">
       <a class="btn" href="#work">See my work</a>
@@ -284,7 +285,7 @@ a:hover .roll>span,a:focus-visible .roll>span{transform:translateY(-100%)}
 (function(){
   var r=document.documentElement,b=document.getElementById('themeBtn');
   if(!b)return;
-  function cur(){var t=r.getAttribute('data-theme');if(t)return t;return window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  function cur(){var t=r.getAttribute('data-theme');if(t)return t;return 'dark';}
   function paint(){var d=cur()==='dark';b.setAttribute('aria-pressed',String(d));b.querySelector('.ti').textContent=d?'☀':'☾';b.querySelector('.tl').textContent=d?'Light mode':'Dark mode';}
   try{var s=localStorage.getItem('theme');if(s==='dark'||s==='light')r.setAttribute('data-theme',s);}catch(e){}
   b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(e){}paint();});
@@ -334,6 +335,17 @@ a:hover .roll>span,a:focus-visible .roll>span{transform:translateY(-100%)}
     (function f(t){var p=Math.min(1,(t-t0)/dur);pc.textContent=Math.round(100*(1-Math.pow(1-p,2)));if(p<1){requestAnimationFrame(f);}else{pre.classList.add('done');de.classList.remove('lock');try{sessionStorage.setItem('pre','1');}catch(e){}setTimeout(function(){pre.remove();},900);start();}})(t0);
   }
   setTimeout(function(){if(!started){if(h1)h1.classList.add('in');var p=document.getElementById('pre');if(p)p.remove();de.classList.remove('lock');}},5000);
+})();
+</script>
+<script>
+(function(){
+  var el=document.getElementById('role');
+  if(!el||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches))return;
+  var w=['Brand designer','Product designer','UI/UX designer','Visual designer'],i=0,j=w[0].length,del=true;
+  function tick(){var s=w[i];
+    if(del){j--;el.textContent=s.slice(0,j);if(j<=0){del=false;i=(i+1)%w.length;setTimeout(tick,350);return;}setTimeout(tick,45);return;}
+    j++;el.textContent=w[i].slice(0,j);if(j>=w[i].length){del=true;setTimeout(tick,1600);return;}setTimeout(tick,90);}
+  setTimeout(tick,2600);
 })();
 </script>
 </body>
